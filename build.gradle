@@ -17,25 +17,25 @@ plugins {
 	// groovy code linter
 	id 'codenarc'
 	// test code coverage plugin
-	id 'net.saliman.cobertura' version '2.5.4'
+	id 'net.saliman.cobertura' version '4.0.0'
 	// awesome git tag / gradle version integration
-	id 'pl.allegro.tech.build.axion-release' version '1.9.2'
+	id 'pl.allegro.tech.build.axion-release' version '1.13.0'
 }
 
 // [general] configuration
 project.ext {
-	groovyVersion       = '2.5.1'
-	gradleVersion       = '4.9'
-	spockVersion        = '1.1-groovy-2.4'
-	codenarcVersion     = '1.2'
-	slf4jVersion        = '1.7.25'
+	groovyVersion       = '2.5.14'
+	gradleVersion       = '6.8.3'
+	spockVersion        = '2.0-M5-groovy-2.5'
+	codenarcVersion     = '2.0.0'
+	slf4jVersion        = '1.7.30'
 
 	wrapper.gradleVersion "$gradleVersion"
 }
 
 project.with {
 	//project.name is set in the settings.gradle with rootProject.name
-	group                 "it.italiaonline.rnd.specification"
+	group                 "it.grational.specification"
 	version               scmVersion.version // (remove -SNAPSHOT for releases)
 	description           "A 'gigawatt' powered project."
 }
@@ -85,8 +85,6 @@ codenarc{
 	}
 }
 
-
-
 // [tasks] configuration //
 jar {
 	// execute check task when create the jar
@@ -107,6 +105,7 @@ task listJars {
 }
 
 tasks.withType(Test) {
+	useJUnitPlatform()
 	maxParallelForks = Runtime.runtime.availableProcessors() / 2
 }
 task uniTest(type: Test) {

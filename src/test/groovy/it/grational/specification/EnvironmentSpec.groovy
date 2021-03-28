@@ -1,4 +1,4 @@
-package it.italiaonline.rnd.specification
+package it.grational.specification
 
 import spock.lang.Specification
 
