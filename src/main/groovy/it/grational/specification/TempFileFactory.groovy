@@ -7,7 +7,7 @@ class TempFileFactory {
 	File create(String content) {
 		File.createTempFile(this.prefix,this.suffix).tap {
 			deleteOnExit()
-			write content
+			if ( content ) write content
 		}
 	}
 }

@@ -34,8 +34,17 @@ class TempFileFactoryISpec extends Specification {
 			prefix | suffix
 			'pre'  | '.ext'
 			'temp' | '.tmp'
-
 	}
 
+	def "Should be capable of creating an empty temporary file"() {
+		given:
+			TempFileFactory tff = new TempFileFactory ()
+
+		when:
+			def tempFile = tff.create()
+
+		then:
+			tempFile.text == ''
+	}
 
 }
