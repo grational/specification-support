@@ -9,6 +9,7 @@ class MockServer {
 	String  protocol
 	String  host
 	Integer port
+	String  authority
 	String  origin
 	String  path
 	String  body
@@ -28,8 +29,9 @@ class MockServer {
 		this.path     = params?.path ?: '/appropriate/path'
 		this.body     = params?.body ?: this.ok.body
 
-		this.origin   = "${protocol}://${host}:${port}"
-		this.url      = "${origin}${path}".toURL()
+		this.authority = "${host}:${port}"
+		this.origin    = "${protocol}://${authority}"
+		this.url       = "${origin}${path}".toURL()
 		this.wms = (this.protocol == 'http')
 		         ? new WireMockServer(options().port(this.port))
 		         : new WireMockServer(options().httpDisabled(true).httpsPort(this.port))
