@@ -17,15 +17,15 @@ plugins {
 	// test code coverage plugin
 	id 'net.saliman.cobertura' version '4.0.0'
 	// awesome git tag / gradle version integration
-	id 'pl.allegro.tech.build.axion-release' version '1.13.5'
+	id 'pl.allegro.tech.build.axion-release' version '1.13.9'
 }
 
 // [general] configuration
 project.ext {
-	groovyVersion   = '3.0.9'
-	spockVersion    = '2.0-groovy-3.0'
-	codenarcVersion = '2.2.0'
-	slf4jVersion    = '1.7.32'
+	groovyVersion   = '3.0.10'
+	spockVersion    = '2.1-groovy-3.0'
+	codenarcVersion = '3.0.1'
+	slf4jVersion    = '1.7.36'
 	wiremockVersion = '2.27.2'
 }
 
@@ -48,7 +48,7 @@ allprojects {
 }
 
 repositories {
-	jcenter()
+	mavenCentral()
 
 	// leverage github as a maven repository
 	maven { url 'https://jitpack.io' }

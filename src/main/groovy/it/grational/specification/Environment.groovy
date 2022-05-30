@@ -11,12 +11,14 @@ class Environment {
 
 	void insert() {
 		Map mutableEnv = this.mutableEnv()
-		mutableEnv << this.variables
+		this.variables.each { String k, String v ->
+			mutableEnv.put(k, v)
+		}
 	}
 
 	void clean() {
 		Map mutableEnv = this.mutableEnv()
-		this.variables.each { k, v ->
+		this.variables.each { String k, String v ->
 			mutableEnv.remove(k)
 		}
 	}
