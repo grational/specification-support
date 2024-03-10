@@ -12,21 +12,8 @@ plugins {
 	id 'java-library'
 	// required by jitpack
 	id 'maven-publish'
-	// groovy code linter
-	id 'codenarc'
-	// test code coverage plugin
-	id 'net.saliman.cobertura' version '4.0.0'
 	// awesome git tag / gradle version integration
-	id 'pl.allegro.tech.build.axion-release' version '1.13.9'
-}
-
-// [general] configuration
-project.ext {
-	groovyVersion   = '3.0.10'
-	spockVersion    = '2.1-groovy-3.0'
-	codenarcVersion = '3.0.1'
-	slf4jVersion    = '1.7.36'
-	wiremockVersion = '2.27.2'
+	id 'pl.allegro.tech.build.axion-release' version '1.14.5'
 }
 
 scmVersion {
@@ -37,14 +24,9 @@ scmVersion {
 
 project.with {
 	//project.name is set in the settings.gradle with rootProject.name
-	group                 'it.grational'
-	version               scmVersion.version // (remove -SNAPSHOT for releases)
-	description           "A 'gigawatt' powered project."
-}
-// [crosscompile] source and target java version
-allprojects {
-	sourceCompatibility = '1.8'
-	targetCompatibility = sourceCompatibility
+	group       'it.grational'
+	version     scmVersion.version // (remove -SNAPSHOT for releases)
+	description "A 'gigawatt' powered project."
 }
 
 repositories {
@@ -57,44 +39,24 @@ repositories {
 dependencies {
 	// Groovy language support
 	implementation (
-		"org.codehaus.groovy:groovy:$groovyVersion"
+		"org.codehaus.groovy:groovy:3.0.21"
 	)
 
 	api (
-		"com.github.tomakehurst:wiremock:$wiremockVersion"
+		'org.wiremock:wiremock:3.4.2'
 	)
 
 	// We use the awesome Spock testing and specification framework
 	testImplementation (
-		"org.spockframework:spock-core:$spockVersion"
+		"org.spockframework:spock-core:2.3-groovy-3.0"
 	)
-}
-
-// codenarc groovy source analyses
-codenarc{
-	toolVersion = "$codenarcVersion"
-
-	codenarcMain {
-		configFile = rootProject.file('config/codenarc/ruleset.groovy')
-		exclude "**/package-info.*"
-		ignoreFailures true       // does not block builds
-		maxPriority1Violations 0
-		maxPriority2Violations 10
-		maxPriority3Violations 20
-	}
-	codenarcTest {
-		configFile = rootProject.file('config/codenarc/ruleset-test.groovy')
-		ignoreFailures true
-		maxPriority1Violations 0
-		maxPriority2Violations 10
-		maxPriority3Violations 20
-	}
 }
 
 // [tasks] configuration //
 tasks.withType(Test) {
 	useJUnitPlatform()
 	maxParallelForks = Runtime.runtime.availableProcessors() / 2
+	jvmArgs('--add-opens=java.base/java.util=ALL-UNNAMED')
 }
 
 publishing {
@@ -114,16 +76,6 @@ jar {
 	dependsOn 'check'
 }
 
-check {
-	// create the code coverage report
-	dependsOn 'cobertura'
-}
-
-// [tasks] definition
-tasks.withType(Test) {
-	useJUnitPlatform()
-	maxParallelForks = Runtime.runtime.availableProcessors() / 2
-}
 task uniTest(type: Test) {
 	description = 'unit tests task'
 	exclude '**/*ISpec*'

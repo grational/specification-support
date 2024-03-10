@@ -33,8 +33,8 @@ class MockServer {
 		this.origin    = "${protocol}://${authority}"
 		this.url       = "${origin}${path}".toURL()
 		this.wms = (this.protocol == 'http')
-		         ? new WireMockServer(options().port(this.port))
-		         : new WireMockServer(options().httpDisabled(true).httpsPort(this.port))
+			? new WireMockServer(options().port(this.port))
+			: new WireMockServer(options().httpDisabled(true).httpsPort(this.port))
 	}
 
 }
