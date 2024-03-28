@@ -5,7 +5,7 @@ import java.lang.reflect.Field
 class Environment {
 	private final Map variables
 
-	Environment(Map vars) {
+	Environment(Map vars = [:]) {
 		this.variables = Objects.requireNonNull(vars)
 	}
 
@@ -14,6 +14,12 @@ class Environment {
 		this.variables.each { String k, String v ->
 			mutableEnv.put(k, v)
 		}
+	}
+
+	void insert(String k, String v) {
+		this.variables.put(k,v)
+		Map mutableEnv = this.mutableEnv()
+		mutableEnv.put(k, v)
 	}
 
 	void clean() {

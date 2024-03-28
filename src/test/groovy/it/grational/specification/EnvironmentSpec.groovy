@@ -59,4 +59,25 @@ class EnvironmentSpec extends Specification {
 			! System.getenv()."${prefix}_3"
 	}
 
+	def "Should also work with the new insert method with an explicit key and value"() {
+		given:
+			String key = 'env_key'
+			String value = 'env_value'
+
+		when:
+			def environment = new Environment()
+		then:
+			! System.getenv()."$key"
+
+		when:
+			environment.insert(key, value)
+		then:
+			System.getenv()."$key" == "$value"
+
+		when:
+			environment.clean()
+		then:
+			! System.getenv()."$key"
+	}
+
 }
