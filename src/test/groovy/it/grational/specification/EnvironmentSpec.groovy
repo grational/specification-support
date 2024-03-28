@@ -14,18 +14,21 @@ class EnvironmentSpec extends Specification {
 			def env1 = 'value1'
 			def env2 = 'value2'
 			def env3 = 'value3'
+
 		and: 'setup a new Environment object with 3 key/value pairs'
 			def environment = new Environment(
 				ENV_1: env1,
 				ENV_2: env2,
 				ENV_3: env3
 			)
+
 		when: 'we insert the key/value pairs into the environment through the insert method'
 			environment.insert()
 		then:
 			System.getenv().ENV_1 == env1
 			System.getenv().ENV_2 == env2
 			System.getenv().ENV_3 == env3
+
 		when: 'after cleaning the env'
 			environment.clean()
 		then: 'the previously set variables does not exists anymore'
@@ -76,6 +79,27 @@ class EnvironmentSpec extends Specification {
 
 		when:
 			environment.clean()
+		then:
+			! System.getenv()."$key"
+	}
+
+	def "Should be capable of explicitly removing a certain env variable"() {
+		given:
+			String key = 'env_key'
+			String value = 'env_value'
+
+		when:
+			def environment = new Environment()
+		then:
+			! System.getenv()."$key"
+
+		when:
+			environment.insert(key, value)
+		then:
+			System.getenv()."$key" == "$value"
+
+		when:
+			environment.remove(key)
 		then:
 			! System.getenv()."$key"
 	}

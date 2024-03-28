@@ -22,10 +22,14 @@ class Environment {
 		mutableEnv.put(k, v)
 	}
 
-	void clean() {
+	void remove(String k) {
 		Map mutableEnv = this.mutableEnv()
+		mutableEnv.remove(k)
+	}
+
+	void clean() {
 		this.variables.each { String k, String v ->
-			mutableEnv.remove(k)
+			this.remove(k)
 		}
 	}
 
