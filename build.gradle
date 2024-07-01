@@ -15,6 +15,11 @@ plugins {
 	// awesome git tag / gradle version integration
 	id 'pl.allegro.tech.build.axion-release' version '1.13.14'
 }
+// [crosscompile] source and target java version
+allprojects {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = sourceCompatibility
+}
 
 scmVersion {
 	tag {
@@ -43,7 +48,7 @@ dependencies {
 	)
 
 	api (
-		'org.wiremock:wiremock:3.4.2'
+		'com.github.wiremock:wiremock:2.35.0'
 	)
 
 	// We use the awesome Spock testing and specification framework
